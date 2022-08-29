@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block css-files %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/label.css' %}">
+    <link rel="stylesheet" href="{% static 'css/messages.css' %}">
+{% endblock %}
+
+{% block content %}
+<div>
+
+    <h2>Inserir Dados</h2>
+
+    <hr>
+    
+    {% for message in messages %}
+        <p id="messages">{{ message }}</p>
+    {% endfor %}
+
+    <form method="POST">
+        
+        {% csrf_token %}
+        <div id="station">
+
+            <label class="label-description">Escolha a Estação:</label>
+
+            <div class="row">
+
+                <div class="col-xs-12 col-md-12 col-md-12">
+
+                    <select class="form-select" id="select-station" onclick="" style="height: 45px;" name="station">
+                        <option selected>Estações</option>
+                        {% for station in stations %}
+                        <option value="{{station.id}}">{{station.identification}} - {{station.station_type}}</option>
+                        {% endfor %}
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+        
+        <div class="sensor" style="margin-top: 30px;">
+
+             <div class="row">
+
+                <div class="col-xs-3 col-sm-4 col-md-5">
+                    <label class="label-description">Tipo de Sensor:</label>
+                    <select class="form-select" id="sensor-value" style="height: 45px;" name="sensor_type">
+                        <option selected>Escolha o sensor</option>
+                    </select>
+                </div>
+                
+                <div class="col-xs-2 col-sm-2 col-md-3">
+                    <label class="label-description">Valor do Sensor:</label>
+                    <input type="number" id="number-input" placeholder="Digite aqui..." class="form-control" style="height: 45px;" name="sensor_value" step="0.010" required>
+                </div>
+                
+                <div class="col-xs-3 col-sm-4 col-md-4">
+                    <label class="label-description">Data coletada:</label>
+                    <input type="datetime-local" placeholder="Digite aqui..." class="form-control" style="height: 45px;" name="datetime_collected" required>
+                </div>
+                
+                <div class="col-xs-4 col-sm-2 col-md-2">
+                    <input type="submit" value="Inserir novos dados" class="btn btn-primary" style="margin-top: 35px; height: 45px;">
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+
+      
+
+</div>
+    {% endblock %}
+    
+    {% block scripts-footer %}
+    {% load static %}
+    <script src="{% static 'js/sensorAjax.js' %}"></script>
+    <script>
+        document.getElementById("number-input").addEventListener("change", function(){
+            this.value = parseFloat(this.value).toFixed(2);
+        });
+    </script>
+    {% endblock %}
+    

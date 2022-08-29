@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block css-files %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/label.css' %}">
+    <link rel="stylesheet" href="{% static 'css/messages.css' %}">
+{% endblock %}
+
+{% block content %}
+<div>
+
+    <h2>Visualizar Nascente</h2>
+
+    <hr>
+             
+    <div class="nascente" style="margin-top: 30px;">
+        <div class="row">
+
+        <div class="form-group">
+            <div class="col-xs-3 col-sm-4 col-md-6">
+                <label class="label-description" for="identification">Identificação</label>
+                <p class="form-control"> {{ watersource.identification }}</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-3 col-sm-4 col-md-6">
+                <label class="label-description" for="description">Descrição</label>
+                <textarea class="form-control" cols="30" rows="5" style="resize: none;"
+                disabled>{{watersource.description}}</textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-2 col-sm-2 col-md-3">
+                <label class="label-description" for="latitude">Latitude:</label>
+                <p class="form-control"> {{ watersource.latitude }}</p>
+            </div>
+
+            <div class="col-xs-2 col-sm-2 col-md-3">
+                <label class="label-description" for="longitude">Longitude:</label>
+                <p class="form-control"> {{ watersource.longitude }}</p>
+            </div>
+        </div>
+
+        <form method="POST" action="{% url 'watersource:remove_watersource' %}">
+            <div class="form-group">
+                {% csrf_token %}
+                <div class="col-xs-4 col-sm-2 col-md-2">
+                    <input type="hidden"  name="watersource-id" value="{{watersource.pk}}">
+                    <input type="submit" value="Remover nascente" class="btn btn-danger" style="margin-top: 35px; height: 45px;">
+                </div>
+            </div>
+        </form>
+    </div>   
+</div>
+{% endblock %}

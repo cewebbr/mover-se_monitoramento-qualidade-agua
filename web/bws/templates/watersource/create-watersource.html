@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block css-files %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/label.css' %}">
+    <link rel="stylesheet" href="{% static 'css/messages.css' %}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="{% static 'css/watersource.css'%}">
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+{% endblock %}
+
+{% block content %}
+<div>
+
+    <h2>Inserir Nascente</h2>
+
+    <hr>
+    
+    {% for message in messages %}
+        <p id="messages">{{ message }}</p>
+    {% endfor %}
+
+    <form method="POST">
+        
+        {% csrf_token %}
+             
+        <div class="row" style="margin-top: 30px;">
+
+             <div class="col-md-6">
+
+                <div class="col-xs-3 col-sm-6 col-md-10">
+                    <label class="label-description" for="identification">Identificação</label>
+                    <input type="text" placeholder="Digite aqui..."  class="form-control" style="height: 45px;" name="identification" required>
+                </div>
+            
+                <div class="col-xs-3 col-sm-6 col-md-10">
+                    <label class="label-description" for="description">Descrição</label>
+                    <textarea class="form-control" name="description" rows="5" placeholder="Digite aqui..." required ></textarea>
+                </div>
+                
+                <div class="col-xs-3 col-sm-6 col-md-10">
+                    <label class="label-description" for="latitude">Latitude:</label>
+                    <input type="number" placeholder="Clique no mapa" class="form-control" step="any"  style="height: 45px;" name="latitude" id="latInput" required readonly>
+                </div>
+
+                <div class="col-xs-3 col-sm-6 col-md-10">
+                    <label class="label-description" for="longitude">Longitude:</label>
+                    <input type="number" placeholder="Clique no mapa" class="form-control" step="any"  style="height: 45px;" name="longitude" id="lngInput" required readonly> 
+                </div>
+                
+                <div class="col-xs-4 col-sm-2 col-md-2">
+                    <input type="submit" value="Inserir nova nascente" class="btn btn-primary" style="margin: 15px 0px 15px; height: 45px;">
+                </div>
+        
+
+            </div>
+
+            <div class="col-md-6">
+                <label class="label-map" for="map">Clique na posição:</label>
+                <div id="map"></div>
+            </div>
+
+
+            <!--
+            <div class="row">
+            
+                <div class="form-group">
+                    <div class="col-xs-3 col-sm-4 col-md-6">
+                        <label  for="title-image">Título da Imagem</label>
+                        <textarea class="form-control" name="title-image" rows="3" placeholder="Digite aqui..." ></textarea>
+                    </div>
+                </div>   
+
+                <div class="form-group">
+                    <div class="col-xs-3 col-sm-4 col-md-6">
+                        <label  for="description-image">Descrição</label>
+                        <textarea class="form-control" name="description-image" rows="3" placeholder="Digite aqui..." ></textarea>
+                    </div>
+                </div>  
+
+            </div>
+            -->
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts-footer %}
+    {% load static %}
+    <script src="{% static 'js/input-map.js' %}"></script>
+{% endblock %}

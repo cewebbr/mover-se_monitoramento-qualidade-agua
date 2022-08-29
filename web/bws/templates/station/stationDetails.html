@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+
+{% block css-files %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/stationDetails.css' %}">
+    <link rel="stylesheet" href="{% static 'css/label.css' %}">
+{% endblock %}
+
+{% block content %}
+<div>
+
+    <div id="station">
+
+        <h2>Informações da Estação</h2>
+
+        <hr>
+
+        <div class="row">
+
+            <div class=" col-xs-6 col-sm-4 col-md-4">
+                <label class="label-description">Identificação:</label>
+                <p class="form-control"> {{pointer_station.identification}}</p>
+                <label class="label-description">Tipo da Estação:</label>
+                <p class="form-control">{{pointer_station.station_type.name}}</p>
+            </div>
+
+            <div class="col-xs-4 col-sm-2 col-md-2">
+                <label class="label-description">Latitude:</label>
+                <p class="form-control">{{pointer_station.latitude}}</p>
+                <label class="label-description">Longitude:</label>
+                <p class="form-control">{{pointer_station.longitude}}</p>
+            </div>
+
+            <div class="col-xs-10 col-sm-6 col-md-6">
+                <label class="label-description">Descrição:</label>
+                <textarea class="form-control" cols="30" rows="5" style="resize: none;"
+                    disabled>{{pointer_station.description}}</textarea>
+            </div>
+
+        </div>
+
+    </div> <!-- div station -->
+
+    
+    {% if graphic  %}
+
+    <div id="graphics" style="margin-top: 5px;">
+
+        <h3>Dados Coletados na Estação "{{pointer_station.identification}}" </h3>
+        
+        <hr>
+        <!-- div dos graficos -->
+        <div class="row">
+
+                {% for graphic in graphic %}
+
+                    {% if graphic.sensor_type.graphic_type == 1 %}
+                    <div class="col-xs-2 col-sm-3 col-md-3">
+                        <div id="div-PH" class="form-control">
+                            <h5>{{graphic.sensor_type.name}}</h5>
+                            <input type="text" value="{{graphic.sensor_value}}" class="graphic-value-1" style="display: none;">
+                            <div class="graphic-1" data-percent="50" data-label="Percent"></div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if graphic.sensor_type.graphic_type == 2 %}
+                    <div class="col-xs-2 col-sm-3 col-md-3">
+                        <div id="div-PH" class="form-control">
+                            <input type="text" value="{{graphic.sensor_value}}" class="current-value-2" style="display: none;">
+                            <h5>{{graphic.sensor_type.name}}</h5>
+                            <div class="graphic-2" ><div class="graphic-value-2" id="sensor-value-number">{{graphic.sensor_value}} Cº</div></div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if graphic.sensor_type.graphic_type == 3 %}
+                    <div class="col-xs-2 col-sm-3 col-md-3">
+                        <div id="div-tds" class="form-control">
+                            <h5>{{graphic.sensor_type.name}}</h5>
+                            <p class="graphic-3" id="sensor-value-number">{{graphic.sensor_value}}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                {% endfor %}   
+
+        </div> 
+    
+    </div> <!--  div graficos-->
+    
+    <!-- div dos dados do sensor selecionado -->
+    <div class="sensor" style="margin-top: 10px;">
+
+        <h2>Sensor</h2>
+                
+        <hr>
+        
+        <div class="row">
+            
+            <!-- seleção do sensor -->
+            <div class="col-xs-6 col-sm-3 col-md-3">
+                <label class="label-description">Tipo de Sensor:</label>
+                <select class="form-select" id="sensor-value" onclick="sensorValueData(this)">
+                    <option selected>Escolher sensor</option>
+                    {% for key, sensor in sensors.items %}
+                    <option value="{{key}}">{{sensor.sensor_type_name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="col-xs-6 col-sm-3 col-md-3">
+                <label class="label-description">Valor do Sensor:</label>
+                <input class="form-control" id="value-current-sensor" value="Valor atual" type="text" disabled >
+            </div>
+
+            <div class="col-xs-6 col-sm-3 col-md-3">
+                <label class="label-description">Data e Hora Coletada:</label>
+                <p class="form-control" id="datetime" style="align-items: center;">Hora e data mais recente</p>
+            </div>
+
+            <div class="col-xs-6 col-sm-3 col-md-3" id="div-btn-details">
+                <input type="text" id="id-station" value="{{pointer_station.id}}" style="display: none;">
+                <a class="btn btn-primary" href="#" id="btn-sensor" > Informações Detalhadas</a>
+            </div>
+
+        </div>
+
+    </div> <!-- div valores do sensor -->
+    {% endif %}
+</div> <!--div principal -->
+
+{% endblock %}
+
+
+{% block scripts-footer %}
+{% load static %}
+<script>
+    
+    var number = document.querySelectorAll("[id='sensor-value-number']");
+    for (var i = 0; i < number.length; i++){
+        number[i].innerText = parseFloat(number[i].innerText).toFixed(2);
+
+        if (number[i].innerText.length >= 5){
+            number[i].style.fontSize = "100px"
+            
+        }
+    }
+</script>
+<script src="{% static 'js/radioBarGraphics.js' %}"></script>
+<script src="{% static 'js/thermormeterGraphics.js' %}"></script>
+<script src="{% static 'js/station.js' %}"></script>
+<script src="{% static 'js/sensorMinorValue.js' %}"></script>
+
+
+{% endblock %}

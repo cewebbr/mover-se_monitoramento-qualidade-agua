@@ -1,0 +1,9 @@
+#messages {
+    border-style: solid;
+    color: red;
+    border-color: aliceblue;
+    background-color: aliceblue;
+    margin-top: 10px;
+    padding: 5px;
+    font-style: italic;
+  }

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block css-files %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link rel="stylesheet" href="{% static 'css/messages.css' %}">
+{% endblock %}
+
+{% block title %}Login{% endblock title %}
+
+{% block content %}
+
+<div class="text-center login">
+
+  <main class="form-signin shadow p-3 mb-5 bg-white rounded">
+
+    <h1 class="h3 mb-3 fw-normal">Login</h1>
+
+    <form method="post">
+
+      {% csrf_token %}
+        <input type="text" class="form-control" name="username" placeholder="Nome de usuário" required autofocus>
+
+        <input type="password" class="form-control" name="password" placeholder="Senha" required>
+
+        <p><a href="">Esqueceu a senha?</a></p>
+      
+      <button type="submit" class="btn btn-lg btn-primary">Entrar</button>
+    </form>
+
+    
+    {% for message in messages %}
+        <p id="messages">{{ message }}</p>
+    {% endfor %}
+      
+
+    <p>Não tem cadastro? <a href="{% url 'web:register' %}">Faça aqui!</a></p>
+  </main>
+</div>
+
+
+    
+{% endblock content %}
+    
+
+    
