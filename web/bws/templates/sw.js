@@ -14,7 +14,6 @@ self.addEventListener("install", function (e) {
 				"../static/css/sensorDetails.css",
 				"../static/css/stationDetails.css",
 				'../static/img/icon/water_quality.png',
-				'../static/js/gaugerGraphics.js',
 				'../static/js/linearGraphics.js',
 				'../static/js/radioBarGraphics.js',
 				'../static/js/sensorValues.js',
