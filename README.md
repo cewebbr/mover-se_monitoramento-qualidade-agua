@@ -1,9 +1,11 @@
+
 <h1 align="center"><img src="https://user-images.githubusercontent.com/16292535/150152830-a0077ec7-d677-4e19-b282-04401bb5a060.png" alt="logos Ceweb.br NIC.br CGI.br " width="250" height="auto"></h1>
 
 <h1 align="center">
     <img src="https://ceweb.br/media/imgs/Moverse_na_Web_banner-site.jpg" alt="Vamos transformar Brumadinho. Projeto Mover-se na WEB!" width="450" height="auto">
 </h1>
 
+[![Software License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/mas-cli/mas/blob/main/LICENSE)
 
 <h1 align="center"> Sistema de Monitoramento em Tempo Real de Qualidade de Água de um Rio </h1>
 
@@ -11,25 +13,6 @@ O projeto Sistema de Monitoramento em Tempo Real de Qualidade de Água de um Rio
 Mover-Se na Web – Articulação Pró-Brumadinho](https://ceweb.br/projetos/chamada.html)
 
 <p>Abaixo, liste a licença/s para o projeto. Lembre-se que todas as soluções devem possuir uma licença de código aberto, assim como todos os produtos produzidos com o aporte oferecido pelo Ceweb.br | NIC.br | CGI.br. </p>
-
-
-# Escolhendo a licença para o projeto 
-
-Uma vez definida, exclua essa seção, deixando apenas a indicação do "badge" da licença e o arquivo `LICENSE` dentro do repositório.
-
-Saiba mais sobre licenças de software:
-- [Como escolher uma licença para seu projeto
-](https://www.alura.com.br/artigos/como-escolher-uma-licenca-para-seu-projeto)
-- [Choose an open source license](https://choosealicense.com/)
-- [Como escolher uma licença para sua própria obra](https://www.gnu.org/licenses/license-recommendations.pt-br.html)
-
-Exemplo - MIT License
-
-[![Software License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/mas-cli/mas/blob/main/LICENSE)
-
-Os badges podem ser criados ou retirados do [License Shields](https://shields.io/category/license)
-
-<br/>
 
 #  Descrição da solução
 
@@ -55,38 +38,44 @@ Aqui você deve adicionar uma descrição do projeto. Texto corrido, não maior 
 
 ### Tecnologias utilizadas
 
-Liste aqui as tecnologias utilizadas no projeto como o modelo abaixo.
+- [Django](https://www.djangoproject.com/)
+- [PWA](https://reactnative.dev/)
+- [Arduino](https://www.arduino.cc/)
 
-- [React](https://pt-br.reactjs.org/)
-- [React Native](https://reactnative.dev/)
-
-
-## Executando a aplicação
+## Executando o Projeto
 
 ### Pré-requisitos (Software e/ou Hardware)
 
-Liste aqui todos os pré-requisitos no modelo abaixo.
+Sofware:
 
 - [Git](https://git-scm.com)
-- [Node.js](https://nodejs.org/en/). 
+- [Python](https://nodejs.org/en/). 
+- [Redis](https://redis.io/) \* 
+\* Funcionalidade de Alerta
 
+
+Hardware:
+- [Arduino](https://www.arduino.cc/)
+- [LILYGO® TTGO T-SIM7000G](https://pt.aliexpress.com/item/4000542688096.html)
+- [Mini Painel Solar](https://pt.aliexpress.com/item/4001189122748.html)
+- [Sensor PH](https://pt.aliexpress.com/item/32957428276.html)
+- [Sensor Temperatura](https://pt.aliexpress.com/item/1005004412646322.html)
+- [Caixa de Proteção IP68] (https://pt.aliexpress.com/item/4000019605315.html)
 
 ### 1. No terminal
 
 ```bash
 # Clone este repositório
-$ git clone https://github.com/cewebbr/template_mover-se
+$ git clone https://github.com/cewebbr/mover-se_monitoramento-qualidade-agua
 
 # Acesse a pasta do projeto no terminal
-$ cd template_mover-se
-
-# Crie um arquivo `.env` na raiz do projeto
-
-$ cp .env-exemple .env
+$ cd mover-se_monitoramento-qualidade-agua/web
 
 # Instale as dependências
 $ pip install -r requirements.txt
 
+# Crie um arquivo `.env` na bws/bws raiz do projeto
+$ cp .env-exemple .env
 ```
 
 ###  2. Configuração das variáveis de ambientes
@@ -99,12 +88,21 @@ twitter_api_secret=""
 secret=""
 DATABASE_URL=""
 ```
-###  3. Executando a aplicação
+###  3. Criação do Banco de Dados e Administrador
 ```bash
-# Execute a aplicação em modo de desenvolvimento
-$ python server.py
+# Execute o comando para criar a base de dados
+$ python manage.py migrate --run-syncdb
 
-# O servidor inciará na porta:3333 - acesse <http://localhost:3333>
+# Cria um administrador do sistema
+$ python manage.py createsuperuser
+```
+
+###  4. Executando a aplicação
+```bash
+# Execute a aplicação com o sevidor de desenvolvimento
+$ python manage.py runserver
+
+# O servidor inciará na porta:8000 - acesse < http://localhost:8000 >
 ```
 
 </br>
