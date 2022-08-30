@@ -3,7 +3,7 @@ function addMapPicker() {
     var map = L.map('map').setView([-10.658470336291018, -50.70587977228521], 4);
     L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=h9QcRHycQ6mEJBkYlPyW', {
                  attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
-                 maxZoom: 10,
+                 maxZoom: 20,
                  tileSize: 512,
                  zoomOffset: -1
              }).addTo(map);
