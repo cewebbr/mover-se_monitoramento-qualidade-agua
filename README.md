@@ -61,7 +61,7 @@ Hardware:
 - [Mini Painel Solar](https://pt.aliexpress.com/item/4001189122748.html)
 - [Sensor PH](https://pt.aliexpress.com/item/32957428276.html)
 - [Sensor Temperatura](https://pt.aliexpress.com/item/1005004412646322.html)
-- [Caixa de Proteção IP68] (https://pt.aliexpress.com/item/4000019605315.html)
+- [Caixa de Proteção IP68](https://pt.aliexpress.com/item/4000019605315.html)
 
 ### 1. No terminal
 
