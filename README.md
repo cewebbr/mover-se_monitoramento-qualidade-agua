@@ -51,6 +51,7 @@ Sofware:
 - [Git](https://git-scm.com)
 - [Python](https://nodejs.org/en/). 
 - [Redis](https://redis.io/) \* 
+
 \* Funcionalidade de Alerta
 
 
