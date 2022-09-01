@@ -14,7 +14,7 @@ Mover-Se na Web – Articulação Pró-Brumadinho](https://ceweb.br/projetos/cha
 
 #  Descrição da solução
 
-Neste projeto foi desenvolvido um protótipo de estação de monitoramento de qualidade da água de baixo custo utilizando a plataforma Arduino/ESP. Também foi criado um sistema de informação geográfico utilizando a framework Django (backend) e Bootstrap (frontend) responsável por agregar todas as informações enviadas das estações de monitoramento.
+Neste projeto foi desenvolvido um protótipo de estação de monitoramento de qualidade da água de baixo custo utilizando a plataforma Arduino/ESP que se comunica com um sistema web desenvolvido com a framework Django, Bootstrap e PWA. Ao todo o projeto é composto por três componentes principais: (i) a aplicação web, (ii) o hardware que compõem a estação de monitoramento, (iii) e o firmware que foi desenvolvido para a placa LILYGO® TTGO T-SIM7000G. 
 
 <p align="center">
     <img src="hardware/img/schematic.png" width="40%" height="40%" alt="Esquemático da estação desenvolvida">
