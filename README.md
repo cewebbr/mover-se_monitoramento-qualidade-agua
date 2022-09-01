@@ -12,41 +12,48 @@
 O projeto Sistema de Monitoramento em Tempo Real de Qualidade de Água de um Rio faz parte da chamada pública [CGI.br/NIC.br/Ceweb.br nº 01/2019
 Mover-Se na Web – Articulação Pró-Brumadinho](https://ceweb.br/projetos/chamada.html)
 
-<p>Abaixo, liste a licença/s para o projeto. Lembre-se que todas as soluções devem possuir uma licença de código aberto, assim como todos os produtos produzidos com o aporte oferecido pelo Ceweb.br | NIC.br | CGI.br. </p>
-
 #  Descrição da solução
 
-Aqui você deve adicionar uma descrição do projeto. Texto corrido, não maior que ~600 caracteres e/ou ~100 palavras.
+Neste projeto foi desenvolvido um protótipo de estação de monitoramento de qualidade da água de baixo custo utilizando a plataforma Arduino/ESP. Também foi criado um sistema de informação geográfico utilizando a framework Django (backend) e Bootstrap (frontend) responsável por agregar todas as informações enviadas das estações de monitoramento.
 
-### Funcionalidades ativas
+<p align="center">
+    <img src="hardware/img/schematic.png" width="40%" height="40%" alt="Esquemático da estação desenvolvida">
+</p>
 
-- [x] Cadastro de criação de usuário
-- [x] Cadastro de Denúncia
-- [x] Cadastro de uma fonte
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/276077/187819655-9bb7e3c5-82b3-4395-a704-14c8f66d7c8b.png" width="50%" height="50%" alt="Pagína inicial da aplicação web">
+</p>
 
-### Funcionalidades em desenvolvimento
-- [x] Moderação de comentários
-- [x] Moderação de ativos
+## Funcionalidades ativas
 
-### Papeis e suas descrições
+- [x] Criação de usuário
+- [x] Cadastro de Estação
+- [x] Cadastro de Nascente
+- [x] Cadastro de Alerta
+- [x] Visualização de Perfil
+- [x] Envio Manual e Automático de Dados* 
 
--  Usuário: Uma breve descrição sobre os papeis do usuário na operação do sistema.
--  Moderador: Uma breve descrição sobre os papeis do Moderador na operação do sistema.
--  Administrador: Uma breve descrição sobre os papeis do Administrador na operação do sistema.
+\* Através da utilização do hardware desenvolvido
+
+
+## Papéis e suas descrições
+
+-  Visitante: Qualquer pessoa que acesse ao sistema web sem possuir um usuário cadastrado no sistema.
+-  Usuário: Qualquer pessoa que tenha um usuário cadastrado no sistema. O usuário pode cadastrar dados em estações já criadas pelo administrador.
+-  Administrador: Qualquer pessoa que tenha um usuário cadastrado no sistema com a permissão de administrador. Essa permissão o habilita a acessar o painel de administração. O administrador será notificado quando um usuário solicitar o cadastro no sistema. 
 
 #  Instalação
 
-### Tecnologias utilizadas
+## Tecnologias utilizadas
 
 - [Django](https://www.djangoproject.com/)
-- [PWA](https://reactnative.dev/)
+- Progressive Web App (PWA)
+- [Bootstrap](https://getbootstrap.com/)
 - [Arduino](https://www.arduino.cc/)
 
-## Executando o Projeto
+## Executando a Aplicação Web
 
-### Pré-requisitos (Software e/ou Hardware)
-
-Sofware:
+### Pré-requisitos
 
 - [Git](https://git-scm.com)
 - [Python](https://nodejs.org/en/). 
@@ -54,14 +61,6 @@ Sofware:
 
 \* Funcionalidade de Alerta
 
-
-Hardware:
-- [Arduino](https://www.arduino.cc/)
-- [LILYGO® TTGO T-SIM7000G](https://pt.aliexpress.com/item/4000542688096.html)
-- [Mini Painel Solar](https://pt.aliexpress.com/item/4001189122748.html)
-- [Sensor PH](https://pt.aliexpress.com/item/32957428276.html)
-- [Sensor Temperatura](https://pt.aliexpress.com/item/1005004412646322.html)
-- [Caixa de Proteção IP68](https://pt.aliexpress.com/item/4000019605315.html)
 
 ### 1. No terminal
 
@@ -102,13 +101,36 @@ $ python manage.py createsuperuser
 ```bash
 # Execute a aplicação com o sevidor de desenvolvimento
 $ python manage.py runserver
+```
+O servidor inciará na porta 8000. Acesse < http://localhost:8000 > para visualizar a aplicação funcionando.
 
-# O servidor inciará na porta:8000 - acesse < http://localhost:8000 >
+### 5. Funcionalidade de Alerta
+A fucionalidade de alerta usa a framework [Celery](https://docs.celeryq.dev/en/stable/) que permite a execução de tarefas assíncronas. Para que essa funcionalidade seja ativada é importante que exista uma banco de dados Redis executando e com suas informações configuradas no arquivo `.env`. 
+Para ativar a funcionalide, acesse a pasta principal (bws) e digite o comando abaixo.
+
+```
+celery -A bws worker --beat --scheduler django --loglevel DEBUG 
 ```
 
 </br>
 
-#### Solução de problemas
+## Executando o Projeto de Hardware
+
+### Pré-requisitos
+- [Arduino](https://www.arduino.cc/)
+- [LILYGO® TTGO T-SIM7000G](https://pt.aliexpress.com/item/4000542688096.html)
+- [Mini Painel Solar](https://pt.aliexpress.com/item/4001189122748.html)
+- [Sensor PH](https://pt.aliexpress.com/item/32957428276.html)
+- [Sensor Temperatura](https://pt.aliexpress.com/item/1005004412646322.html)
+- [Caixa de Proteção IP68](https://pt.aliexpress.com/item/4000019605315.html)
+- Jumpers
+
+### Configuração
+
+O projeto de hardware requer a utilização dos componentes eletrônicos descritos [anteriormente](#pr%C3%A9-requisitos-1). Em posse deles, o usuário deve montar a estação seguindo o esquemático disponível ([aqui](hardware/img/schematic.png)). Com o hardware montado seguindo o esquemático, o Arduino IDE deve ser configurado seguindo o passo a passo descrito em [ArduinoIDE.md](hardware/ArduinoIDE.md).
+
+
+# Solução de problemas
 
 Descreva aqui caso existam problemas conhecidos, como pacotes, conflitos entre versões e se possível, como resolver ou um artigo que auxilie na solução. Caso não existir, omitir a seção.
 
@@ -116,9 +138,9 @@ Descreva aqui caso existam problemas conhecidos, como pacotes, conflitos entre v
 
 ### Equipe responsável pelo projeto 
 
-- Ana Maria         - UFRJ - Coordenadora - ana@email.com.br
-- João da Silva     - UFMG - Pessoa desenvolvedora - joao@email.com.br
-- Luciana de Souza  - UFPR - Pessoa desenvolvedora - luciana@email.com.br
+- [Gabriel Lima](https://github.com/Gabs19)           - IFPE Campus Paulista - Pessoa desenvolvedora - gagl@discente.ifpe.edu.br
+- [Gaston Gouveia](https://github.com/Gastongouveia)  - IFPE Campus Paulista - Pessoa desenvolvedora - glgs@discente.ifpe.edu.br
+- [Rodrigo Lira](https://github.com/rodrigoclira)     - IFPE Campus Paulista - Coordenador - rodrigo.lira@paulista.ifpe.edu.br
 
 </br>
 
