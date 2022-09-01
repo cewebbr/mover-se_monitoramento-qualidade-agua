@@ -39,7 +39,7 @@ Neste projeto foi desenvolvido um protótipo de estação de monitoramento de qu
 ## Papéis e suas descrições
 
 -  Visitante: Qualquer pessoa que acesse ao sistema web sem possuir um usuário cadastrado no sistema.
--  Usuário: Qualquer pessoa que tenha um usuário cadastrado no sistema. O usuário pode cadastrar dados em estações já criadas pelo administrador.
+-  Usuário Comum: Qualquer pessoa que tenha um usuário cadastrado no sistema. O usuário pode cadastrar dados em estações já criadas pelo administrador.
 -  Administrador: Qualquer pessoa que tenha um usuário cadastrado no sistema com a permissão de administrador. Essa permissão o habilita a acessar o painel de administração. O administrador será notificado quando um usuário solicitar o cadastro no sistema. 
 
 #  Instalação
@@ -49,7 +49,7 @@ Neste projeto foi desenvolvido um protótipo de estação de monitoramento de qu
 - [Django](https://www.djangoproject.com/)
 - Progressive Web App (PWA)
 - [Bootstrap](https://getbootstrap.com/)
-- [Arduino](https://www.arduino.cc/)
+- Placa ESP32 ([LILYGO® TTGO T-SIM7000G](https://pt.aliexpress.com/item/4000542688096.html))
 
 ## Executando a Aplicação Web
 
@@ -74,26 +74,21 @@ $ cd mover-se_monitoramento-qualidade-agua/web
 # Instale as dependências
 $ pip install -r requirements.txt
 
-# Crie um arquivo `.env` na bws/bws raiz do projeto
-$ cp .env-exemple .env
 ```
-
 ###  2. Configuração das variáveis de ambientes
 
-Abra o arquivo `.env` na raiz do projeto e configure as variáveis de ambiente
+Na pasta bws/bws há o arquivo `.env` padrão que será utilizado na execução do projeto. Há também o arquvo `.env-prod` com um exemplo
+de configuração utilizando o banco de daddos postgresql. 
 
-```
-twitter_api_key=""
-twitter_api_secret=""
-secret=""
-DATABASE_URL=""
-```
+O `.env` padrão não possui configuração de servidor SMTP e o banco utilizado é o SQLITE3. O envio de e-mail faz parte de algumas funcionalidades (aleta, troca de senha...), mas não impede da aplicação funcionar. 
+
 ###  3. Criação do Banco de Dados e Administrador
+
 ```bash
 # Execute o comando para criar a base de dados
 $ python manage.py migrate --run-syncdb
 
-# Cria um administrador do sistema
+# Criação um administrador do sistema
 $ python manage.py createsuperuser
 ```
 
