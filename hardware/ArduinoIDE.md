@@ -34,6 +34,4 @@ Core Debug Level: "Nenhum"
 
 ![Configuração da IDE](img/arduino_ide_2.png)
 
->>>>>>> 2f2c703cadfa1544a320ed9edb0f1d3948c887e2:hardware/Hardware.md
-
 A última etapa é plugar a placa na USB do computador e enviar o sketch para a TTGO.
