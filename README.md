@@ -117,7 +117,7 @@ celery -A bws worker --beat --scheduler django --loglevel DEBUG
 ## Executando o Projeto de Hardware
 
 ### Pré-requisitos
-- [Arduino](https://www.arduino.cc/)
+- [Arduino IDE](https://www.arduino.cc/)
 - [LILYGO® TTGO T-SIM7000G](https://pt.aliexpress.com/item/4000542688096.html)
 - [Mini Painel Solar](https://pt.aliexpress.com/item/4001189122748.html)
 - [Sensor PH](https://pt.aliexpress.com/item/32957428276.html)
