@@ -25,13 +25,14 @@ URL DA PLACA TTGO: https://raw.githubusercontent.com/espressif/arduino-esp32/gh-
 
 Também será necessário abrir o código e configurar a IDE da seguinte forma, como exibido na figura: 
 
-Placa: "ESP32 Wrover Module"
-Upload Speed: "921600"
-Flash Frequency: "80MHz"
-Flash Mode: "QIO"
-Partition Scheme: "Default 4MB with spiffs (1.2MB APP/1.5MB SPIFFS)"
-Core Debug Level: "Nenhum"
-
+```
+    Placa: "ESP32 Wrover Module"
+    Upload Speed: "921600"
+    Flash Frequency: "80MHz"
+    Flash Mode: "QIO"
+    Partition Scheme: "Default 4MB with spiffs (1.2MB APP/1.5MB SPIFFS)"
+    Core Debug Level: "Nenhum"
+```
 
 
 
