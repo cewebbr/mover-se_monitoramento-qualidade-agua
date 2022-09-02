@@ -26,15 +26,19 @@ Neste projeto foi desenvolvido um protótipo de estação de monitoramento de qu
 
 ## Funcionalidades ativas
 
-- [x] Criação de usuário
+- [x] Criação de Usuário
 - [x] Cadastro de Estação
 - [x] Cadastro de Nascente
 - [x] Cadastro de Alerta
 - [x] Visualização de Perfil
-- [x] Envio Manual e Automático de Dados* 
+- [x] Cadastro Manual de Dados
+- [x] API para Recebimento de Dados
+- [x] Visualização de Dados Históricos 
+- [x] Carregamento Solar*
+- [x] Desligamento Programado para Economia de Energia (_Deep Sleep_)*
+- [x] Envio de Dados via WiFI*
 
-\* Através da utilização do hardware desenvolvido
-
+\* Estação de Monitoramento (Hardware / Firmware).
 
 ## Papéis e suas descrições
 
@@ -62,7 +66,7 @@ Neste projeto foi desenvolvido um protótipo de estação de monitoramento de qu
 \* Funcionalidade de Alerta
 
 
-### 1. No terminal
+### 1. No Terminal
 
 ```bash
 # Clone este repositório
@@ -75,12 +79,12 @@ $ cd mover-se_monitoramento-qualidade-agua/web
 $ pip install -r requirements.txt
 
 ```
-###  2. Configuração das variáveis de ambientes
+###  2. Configuração das Variáveis de Ambiente
 
-Na pasta bws/bws há o arquivo `.env` padrão que será utilizado na execução do projeto. Há também o arquvo `.env-prod` com um exemplo
-de configuração utilizando o banco de daddos postgresql. 
+Na pasta `web/bws/bws` há o arquivo `.env` padrão que será utilizado na execução do projeto. Há também o arquvo `.env-prod` com um exemplo
+de configuração utilizando o banco de dados PostgreSQL. 
 
-O `.env` padrão não possui configuração de servidor SMTP e o banco utilizado é o SQLITE3. O envio de e-mail faz parte de algumas funcionalidades (aleta, troca de senha...), mas não impede da aplicação funcionar. 
+O `.env` padrão não possui configuração de servidor SMTP e o banco utilizado é o Sqlite3. O envio de e-mail faz parte de algumas funcionalidades (aleta, troca de senha...), mas não impede da aplicação funcionar. 
 
 ###  3. Criação do Banco de Dados e Administrador
 
@@ -92,7 +96,7 @@ $ python manage.py migrate --run-syncdb
 $ python manage.py createsuperuser
 ```
 
-###  4. Executando a aplicação
+###  4. Executando a Aplicação
 ```bash
 # Execute a aplicação com o sevidor de desenvolvimento
 $ python manage.py runserver
@@ -101,12 +105,29 @@ O servidor inciará na porta 8000. Acesse < http://localhost:8000 > para visuali
 
 ### 5. Funcionalidade de Alerta
 A fucionalidade de alerta usa a framework [Celery](https://docs.celeryq.dev/en/stable/) que permite a execução de tarefas assíncronas. Para que essa funcionalidade seja ativada é importante que exista uma banco de dados Redis executando e com suas informações configuradas no arquivo `.env`. 
-Para ativar a funcionalide, acesse a pasta principal (bws) e digite o comando abaixo.
+
+Antes de iniciar a rotina que irá ficar checando os dados enviados para o sistema, se faz necessário criar no banco de dados a entrada da tarefa assíncrona. Essa configuração deve ser feita apenas uma fez. 
+Acesse o painel de administração e clique em 'Periodic Task'. Adicione uma nova tarefa com as seguintes informações: 
+
+```
+Name: <Coloque o nome que desejar>
+Task (registered): asynctask.tasks.cron_read_alerts
+Interval Schedule: 1 hours
+```
+
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/276077/188041394-bb663fea-b0ed-4588-b048-db6008d49b17.png" width="70%" height="70%" alt="Criação da Tarefa Agendada">
+  
+</p>
+
+Em seguida, clique no botão "Save".  
+
+
+Para executar o servidor do Celery, acesse a pasta principal (`web/bws`) e digite o comando abaixo:
 
 ```
 celery -A bws worker --beat --scheduler django --loglevel DEBUG 
 ```
-
 </br>
 
 ## Executando o Projeto de Hardware
@@ -122,12 +143,13 @@ celery -A bws worker --beat --scheduler django --loglevel DEBUG
 
 ### Configuração
 
-O projeto de hardware requer a utilização dos componentes eletrônicos descritos [anteriormente](#pr%C3%A9-requisitos-1). Em posse deles, o usuário deve montar a estação seguindo o esquemático disponível ([aqui](hardware/img/schematic.png)). Com o hardware montado seguindo o esquemático, o Arduino IDE deve ser configurado seguindo o passo a passo descrito em [ArduinoIDE.md](hardware/ArduinoIDE.md).
+O projeto de hardware requer a utilização dos componentes eletrônicos descritos [anteriormente](#pr%C3%A9-requisitos-1). Em posse deles, o usuário deve montar a estação de monitoramento seguindo o esquemático disponível ([aqui](hardware/img/schematic.png)). Após o hardware montado, o Arduino IDE deve ser configurado seguindo o passo a passo descrito em [ArduinoIDE.md](hardware/ArduinoIDE.md).
 
 
 # Solução de problemas
 
-Descreva aqui caso existam problemas conhecidos, como pacotes, conflitos entre versões e se possível, como resolver ou um artigo que auxilie na solução. Caso não existir, omitir a seção.
+Caso seja encotrado algum problema na reprodução dos passos anteriores ou na execução do projeto, entre em contato com [Rodrigo Lira](https://github.com/rodrigoclira) através do contato disponível na seção "Equipe responsável pelo projeto".
+
 
 <br/>
 
