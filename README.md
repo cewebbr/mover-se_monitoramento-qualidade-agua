@@ -84,12 +84,28 @@ $ pip install -r requirements.txt
 Na pasta `web/bws/bws` há o arquivo `.env` padrão que será utilizado na execução do projeto. Há também o arquvo `.env-prod` com um exemplo
 de configuração utilizando o banco de dados PostgreSQL. 
 
-O `.env` padrão não possui configuração de servidor SMTP e o banco utilizado é o Sqlite3. O envio de e-mail faz parte de algumas funcionalidades (aleta, troca de senha...), mas não impede da aplicação funcionar. 
+**.env**
+```
+DEBUG=on
+PROD=off
+SECRET_KEY='o01wgdlan@h0w#re(&kk03bgzf*!afrz^vy*ifhk9g(rmcb!(s'
+ALLOWED_HOSTS=['*']
+
+DATABASE_URL=sqlite:///db.sqlite3
+CELERY_BROKER_URL="redis://localhost:6379"
+
+EMAIL_HOST_USER=""
+EMAIL_HOST_PASSWORD=""
+EMAIL_HOST="smtp.gmail.com"
+DEFAULT_FROM_EMAIL=""
+```
+
+O `.env` padrão não possui configuração de servidor SMTP e o banco utilizado é o Sqlite3. O envio de e-mail faz parte de algumas funcionalidades (aleta, troca de senha...), mas não impede da aplicação funcionar. Recomenda-se usar o [sendgrid](https://sendgrid.com/) como _backend_ para envio de e-mail.
 
 ###  3. Criação do Banco de Dados e Administrador
 
 ```bash
-# Execute o comando para criar a base de dados
+# Execute o comando para criar a base de dados na pasta web/bws
 $ python manage.py migrate --run-syncdb
 
 # Criação um administrador do sistema
@@ -101,13 +117,15 @@ $ python manage.py createsuperuser
 # Execute a aplicação com o sevidor de desenvolvimento
 $ python manage.py runserver
 ```
-O servidor inciará na porta 8000. Acesse < http://localhost:8000 > para visualizar a aplicação funcionando.
+O servidor inciará na porta 8000. Acesse < http://localhost:8000 > para visualizar a aplicação funcionando. 
+
+Para criar entidades do projeto, acesse o sistema com as credenciais do administrador criadas no passo 3 e acesse o painel de administração.
+Será necessário criar Sensores, Tipos de Estações e Estações. Além de vincular os sensores existentes às estações criadas.
 
 ### 5. Funcionalidade de Alerta
-A fucionalidade de alerta usa a framework [Celery](https://docs.celeryq.dev/en/stable/) que permite a execução de tarefas assíncronas. Para que essa funcionalidade seja ativada é importante que exista uma banco de dados Redis executando e com suas informações configuradas no arquivo `.env`. 
+A fucionalidade de alerta é implementada utilizando a framework [Celery](https://docs.celeryq.dev/en/stable/). Para que essa funcionalidade seja ativada é importante que exista uma banco de dados Redis executando segundo as informações configuradas no arquivo `.env`. 
 
-Antes de iniciar a rotina que irá ficar checando os dados enviados para o sistema, se faz necessário criar no banco de dados a entrada da tarefa assíncrona. Essa configuração deve ser feita apenas uma fez. 
-Acesse o painel de administração e clique em 'Periodic Task'. Adicione uma nova tarefa com as seguintes informações: 
+Antes de iniciar a rotina que irá ficar checando os dados enviados para o sistema, se faz necessário criar no banco de dados a entrada da tarefa assíncrona. Essa configuração deve ser feita apenas uma única vez da seguinte forma: acesse o painel de administração e clique em 'Periodic Task'. Adicione uma nova tarefa com as seguintes informações: 
 
 ```
 Name: <Coloque o nome que desejar>
@@ -126,8 +144,15 @@ Em seguida, clique no botão "Save".
 Para executar o servidor do Celery, acesse a pasta principal (`web/bws`) e digite o comando abaixo:
 
 ```
-celery -A bws worker --beat --scheduler django --loglevel DEBUG 
+$ celery -A bws worker --beat --scheduler django --loglevel DEBUG 
 ```
+
+ou execute o script `web/bws/startcelery.sh`
+
+```
+$ ./startcelery.sh
+```
+
 </br>
 
 ## Executando o Projeto de Hardware
