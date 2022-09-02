@@ -1,4 +1,4 @@
-from station.models import SensorTypeStation, Station
+from station.models import SensorStation, Station
 from django.http.response import JsonResponse
 from rest_framework import status
 from .serializers import SensorValueSerializer
@@ -37,7 +37,7 @@ class Version1Parser(APIParser):
         out_messages = {}
 
         for sensor_key, sensor_value in sensors_items:
-            if SensorTypeStation.objects.filter(sensor_type__key=sensor_key, station=station).exists():
+            if SensorStation.objects.filter(sensor_type__key=sensor_key, station=station).exists():
                 out_messages[sensor_key] = self.__save_sensor_data(
                     station.id, sensor_key, sensor_value, datetime_collected)
             else:

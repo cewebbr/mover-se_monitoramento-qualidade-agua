@@ -1,5 +1,5 @@
 from django.contrib import admin
-from station.models import SensorType, Station, StationType, SensorTypeStation, SensorValue, AlertSensor
+from station.models import Sensor, Station, StationType, SensorStation, SensorValue, AlertSensor
 
 # Register your models here.
 
@@ -18,13 +18,13 @@ class StationAdmin(admin.ModelAdmin):
               'description', 'latitude', 'longitude',)
 
 
-@admin.register(SensorType)
+@admin.register(Sensor)
 class SensorTypeAdmin(admin.ModelAdmin):
     list_display = ('name', 'key', 'graphic_type')
     fields = ('name', 'key', 'graphic_type')
 
 
-@admin.register(SensorTypeStation)
+@admin.register(SensorStation)
 class SensorTypeStationAdmin(admin.ModelAdmin):
     list_display = ('station', 'sensor_type')
     fields = ('station', 'sensor_type')

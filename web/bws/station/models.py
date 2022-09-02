@@ -27,20 +27,26 @@ class Station(models.Model):
         return f"{self.identification}"
 
 
-class SensorType(models.Model):
+class Sensor(models.Model):
+    GRAPH_CHOICE = (
+        (1, 'Percentage'),
+        (2, 'Thermometer'),
+        (3, 'Number'),
+    )
+
     key = models.CharField(primary_key=True, max_length=20)
     name = models.CharField(max_length=100, unique=True)
-    graphic_type = models.IntegerField(default=1)
+    graphic_type = models.IntegerField(default=1, choices=GRAPH_CHOICE)
     deleted = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.name}"
 
 
-class SensorTypeStation(models.Model):
+class SensorStation(models.Model):
     station = models.ForeignKey(Station, on_delete=models.SET_NULL, null=True)
     sensor_type = models.ForeignKey(
-        SensorType, on_delete=models.SET_NULL, null=True)
+        Sensor, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return f"{self.station} - {self.sensor_type}"
@@ -49,7 +55,7 @@ class SensorTypeStation(models.Model):
 class SensorValue(models.Model):
     station = models.ForeignKey(Station, on_delete=models.SET_NULL, null=True)
     sensor_type = models.ForeignKey(
-        SensorType, on_delete=models.SET_NULL, null=True)
+        Sensor, on_delete=models.SET_NULL, null=True)
     sensor_value = models.CharField(max_length=30)
     datetime_collected = models.DateTimeField()
     datetime_creation = models.DateTimeField(auto_now_add=True)
@@ -75,7 +81,7 @@ class AlertSensor(models.Model):
         ("180", '3 horas'),
         ("300", '5 horas'),
         ("600", '10 horas'),
-        ("3", '3 Minutos')
+    #   ("3", '3 Minutos') #test only
     )
 
     OPERATOR_CHOICES = (
@@ -87,7 +93,7 @@ class AlertSensor(models.Model):
 
     station = models.ForeignKey(Station, on_delete=models.SET_NULL, null=True)
     sensor_type = models.ForeignKey(
-        SensorType, on_delete=models.SET_NULL, null=True)
+        Sensor, on_delete=models.SET_NULL, null=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     operator = models.CharField(
         max_length=10, choices=OPERATOR_CHOICES,  null=True)

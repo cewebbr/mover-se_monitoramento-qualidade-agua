@@ -2,7 +2,7 @@ import datetime
 from django.http.response import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .models import Station, SensorTypeStation, SensorValue, AlertSensor
+from .models import Station, SensorStation, SensorValue, AlertSensor
 import logging
 from .forms import CreateAlertSensorForm, CreateSensorValueForm
 from django.forms.models import model_to_dict
@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 def stationDetail(request, id):
     pointer_station = get_object_or_404(Station, pk=id)
 
-    sensors_types = SensorTypeStation.objects.filter(
+    sensors_types = SensorStation.objects.filter(
         station__pk=int(id)).values('sensor_type__key')
 
     data = {}
@@ -41,12 +41,12 @@ def stationDetail(request, id):
 def sensorDetail(request, id_station, id_sensor):
 
     station = get_object_or_404(Station, pk=id_station)
-    sensor_type_station = SensorTypeStation.objects.filter(
+    sensor_station = SensorStation.objects.filter(
         station=id_station, sensor_type=id_sensor).first()
-    if not sensor_type_station:
+    if not sensor_station:
         raise Http404(
             f"Sensor {id_sensor} not found in {station.identification}.")
-    sensor = sensor_type_station.sensor_type
+    sensor = sensor_station.sensor_type
 
     sensorList = []
     valueList = []
@@ -166,7 +166,7 @@ def sensorAjax(request):
 
     station = request.GET.get('station')
     if request.is_ajax():
-        sensores_queryset = SensorTypeStation.objects.filter(
+        sensores_queryset = SensorStation.objects.filter(
             station__pk=int(station))
         sensors = {sensor_type_station.sensor_type.key:
                    sensor_type_station.sensor_type.name for sensor_type_station in sensores_queryset}
