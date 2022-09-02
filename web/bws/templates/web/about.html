@@ -1,0 +1,61 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block css-files %} 
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+
+    <div class="row featurette">
+        <div class="col-md-6">
+            <h2 style="text-align: center; margin-bottom: 25px;">Mover-se na Web</h2>
+            <p class="lead" style="text-align: justify;">
+                Estudantes de graduação, pós-graduação e empreendedores participarão do projeto Mover-Se na Web - Articulação Pró-Brumadinho, 
+                que visa apoiar a cidade de Brumadinho (MG). Em linhas gerais, forão submetidas propostas com ideias inovadoras 
+                para auxiliar os habitantes da cidade a encontrarem alternativas econômicas ou mitigar os problemas sociais causados pela tragédia de 2019 nos termos da chamada pública. 
+            </div>
+        <div class="col-md-6">
+            <h2 style="text-align: center; margin-bottom: 25px;">Sistema de Monitoramento</h2>
+            <p class="lead" style="text-align: justify;">
+                A proposta deste projeto é desenvolver um protótipo de estação de monitoramento de qualidade da água de baixo custo usando plataforma Arduino/ESP. 
+                A estação desenvolvida irá monitorar a qualidade da água de um rio e enviar os dados coletados através da internet para um sistema de informação geográfico (SIG). 
+                O sistema desenvolvido é responsável por agregar todas as informações enviadas das estações de e permite analisar o histórico de coleta da estação e as respectivas localizações geográficas dessas informações. 
+            </p>
+            <h4>Soluções Direcionadas:</h4>
+            <ul>
+                <li>Fortalecer redes de Vigilancia ambiental</li>
+                <li>Foco no monitoramento da preservação </li>
+            </ul>  
+        </div>
+      </div>
+  
+      <hr class="featurette-divider">
+    
+    <div class="row" style="margin-top: 30px;">
+        <br>
+        <h3>Equipe</h3>
+        <div class="col-lg-4 card-info" >
+            <img class="image-round" src="{% static 'img/profile/Rodrigo.png' %}" width="140" height="140">
+            <h2><a href="https://www.linkedin.com/in/rodrigoclira/" target="blank"> Rodrigo Lira</a></h2>
+            <p>Coodernador</p>
+        </div>
+        
+        <div class="col-lg-4 card-info">
+            <img class="image-round" src="{% static 'img/profile/Gaston.png' %}" width="140" height="140">
+            <h2><a href="https://www.linkedin.com/in/gaston-gouveia-27637887/" target="blank">Gaston Gouveia</a></h2>
+            <p>Aluno Bolsista</p>
+        </div>
+        
+        <div class="col-lg-4 card-info">
+            <img class="image-round" src="{% static 'img/profile/Gabriel.png' %}" width="140" height="140">
+            <h2><a href="https://www.linkedin.com/in/gabriel-lima-861181168/" target="blank">Gabriel Lima</a></h2>
+            <p>Aluno Bolsista</p>
+        </div>
+        
+    </div>
+</div>
+        {% endblock %}

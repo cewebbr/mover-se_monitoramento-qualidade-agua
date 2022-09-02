@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block css-files %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link rel="stylesheet" href="{% static 'css/messages.css' %}">
+{% endblock %}
+
+{% block title %}Register{% endblock title %}
+
+{% block content %}
+
+<div class="text-center register">
+
+    <main class="form-signin shadow p-3 mb-5 bg-white rounded">
+
+      <h1 class="h3 mb-3 fw-normal">Cadastro de Usuário</h1>
+
+      <form method="post">
+        
+        {% csrf_token %}
+          <input type="text" class="form-control" name="username" placeholder="Nome de Usuário" required autofocus>
+          
+          <input type="email" class="form-control" name="email" placeholder="E-mail" required autofocus>
+  
+          <input type="password" class="form-control" name="password1" placeholder="Senha" required>
+          
+          <input type="password" class="form-control" name="password2" placeholder="Confirmação de senha" required>
+          
+          <input type="hidden" class="form-control" name="is_active" value="False">
+  
+        
+        <button type="submit" class="btn btn-lg btn-primary">Enviar</button>
+      </form>
+
+      <div>
+        {{ form.errors }}
+      </div>
+
+      <p>Já cadastrado? <a href="{% url 'web:login' %}">Login</a></p>
+    </main>
+  </div>
+    
+{% endblock content %}

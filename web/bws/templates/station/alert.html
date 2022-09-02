@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% block css-files %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/alert.css' %}">
+    <link rel="stylesheet" href="{% static 'css/label.css' %}">
+    <link rel="stylesheet" href="{% static 'css/messages.css' %}">
+{% endblock %}
+
+{% block content %}
+<form  method="POST">
+
+    {% csrf_token %}
+    <div id="station">
+
+        <h2>Criação de Alerta</h2>
+        
+        <hr>
+
+        {% for message in messages %}
+            <p id="messages">{{ message }}</p>
+        {% endfor %}
+
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <label class="label-description">Selecione a Estação</label>
+                <select class="form-select" id="select-station" onclick="" style="height: 45px;" name="station">
+                    <option selected>Estações</option>
+                    {% for station in stations %}
+                    <option value="{{station.id}}">{{station.identification}} - {{station.station_type}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+        </div>
+
+        <div class="row" style="margin-top: 10px;">
+
+            <div class="col-xs-3 col-sm-3 col-md-3">
+                <label class="label-description">Tipo de Sensor</label>
+                <select class="form-select" id="sensor-value" onclick="" style="height: 45px;" name="sensor_type">
+                    <option selected>Escolher sensor</option>
+                </select>
+            </div>
+
+            <div class="col-xs-3 col-sm-3 col-md-3">
+                <label class="label-description">Tipo de Operação</label>
+                <select class="form-select" id="operador" style="height: 45px;" name="operator">
+                    <option selected>Escolher operador</option>
+                    {% for key,value in operator.items %}
+                    <option value="{{key}}">{{value}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="col-xs-2 col-sm-2 col-md-2" id="main-value">
+                <label class="label-description">Valor</label>
+                <input type="number" placeholder="Digite aqui..." class="form-control" style="height: 45px;" name="main_value">
+            </div>
+
+            <div class="col-xs-2 col-sm-2 col-md-2" id="second-value" style="display: none;"></div>
+
+            <div class="col-xs-2 col-sm-2 col-md-2">
+                <label class="label-description">Frequência </label>
+                <select class="form-select" id="time_frequency" style="height: 45px;" name="time_frequency">
+                    <option selected>Selecionar horário</option>
+                    {% for key, value in time.items%}
+                    <option value="{{key}}">{{value}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-xs-4 col-sm-4 col-md-4">
+                <input type="submit" value="Criar alerta" class="btn btn-primary" style="margin-top: 35px; height: 45px;">
+            </div>
+
+        </div>
+
+    </div>
+
+</form>
+
+    <div style="margin-top: 10px;">
+
+        <h2>Alertas Criados</h2>
+
+        <hr>
+
+        <table class="table table-stripped">
+
+            <tr>
+                <th>Estação</th>
+                <th>Sensor</th>
+                <th>Operador</th>
+                <th>Valor(es)</th>
+                <th>Frequência</th>
+                <th>Deletar</th>
+            </tr>
+
+            {% if user.is_authenticated%}
+            {% for alert in alerts %}
+                <tr>
+                    <td>{{alert.station}}</td>
+                    <td>{{alert.sensor_type}}</td>
+                    <td>{{alert.operator}}</td>
+                    {% if alert.second_value %}
+                        <td>{{alert.main_value}} - {{alert.second_value}}</td>
+                    {% else %}
+                        <td>{{alert.main_value}}</td>
+                    {% endif %}
+                    <td>{{alert.time_frequency}} minutos</td>
+                    <td>
+                        <form action="{% url 'station:delete_alert' alert.id %}" method="POST">
+                            {% csrf_token %}
+                            <span>
+                                <button type="submit" class="delete">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </span>
+                        </form>
+                    </td>            
+                </tr>
+                {% endfor %}
+                {% endif %}
+        </table>
+    </div>
+{% endblock %}
+
+{% block scripts-footer %}
+    {% load static %}
+    <script src="{% static 'js/sensorAjax.js' %}"></script>
+    <script src="{% static 'js/alertSecondValue.js' %}"></script>
+{% endblock %}

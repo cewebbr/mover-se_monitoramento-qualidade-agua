@@ -1,0 +1,49 @@
+.sensor-value {
+    margin-left: 40px;
+    font-size: smaller;
+    cursor: pointer;
+}
+
+#div-btn-details {
+  text-align: center; 
+  margin-top: 32.5px;
+}
+
+.subtitle {
+  font-size: small;
+}
+
+#div-temperatura {
+  width: 100%;
+  height: 300px;
+}
+
+#div-PH {
+  width: 100%;
+  height: 300px;
+}
+
+#div-tds {
+  width: 100%;
+  height: 300px;
+  margin-left: 10px;
+  align-items: center;
+  align-content: center;
+}
+
+.graphic-3{
+    font-size: 120px;
+    text-align: center;
+}
+
+.graphic-2{
+  width: 100%;
+  text-align:center;
+  display: flex;
+  justify-self: center;
+  align-items: center;
+}
+
+.graphic-value-2 {
+  display: inline;
+}

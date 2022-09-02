@@ -1,0 +1,12 @@
+.delete {
+    size: 9px;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    line-height: normal;
+    outline: none;
+}
+
+.delete:hover{
+    color: red;
+}

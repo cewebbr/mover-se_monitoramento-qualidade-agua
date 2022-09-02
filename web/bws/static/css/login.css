@@ -1,0 +1,28 @@
+.text-center {
+    max-width: 330px;
+    margin: auto;
+    line-height: 1.5;
+    margin-top: 6em;
+}
+
+.login {
+    padding: 15px;
+}
+
+.register {
+    margin-top: 1em !important;
+    max-width: 385px !important;
+}
+
+.form-control {
+    margin-bottom: 1em;
+    line-height: 2.0 !important;
+}
+
+.form-signin {
+    border: 1px solid #ced4da;
+}
+
+button {
+    width: 70%;
+}

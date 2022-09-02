@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block css-files %} 
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="{% static 'js/leaflet.markercluster.js' %}"></script>
+    <script src="{% static 'js/leaflet.markercluster-src.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/MarkerCluster.css' %}">
+    <link rel="stylesheet" href="{% static 'css/MarkerCluster.Default.css' %}">
+    <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/"> -->
+{% endblock %}
+
+{% block content %}
+        
+        <div class="row">
+            
+            <div class="bd-sidebar col-xs-6 col-sm-3 col-md-3">
+                
+                <div class="search">
+                    
+                    <p id="title-information">Pesquisar</p>
+                    
+                    <hr>
+                    
+                    <div  id="search-station" class="search-input-submit" >
+                        <span class="submit-search"><i class="fa fa-search" id="search-btn"></i></span>
+                        <input type="search" class="input-search" placeholder="Pesquise por uma estação ou nascente..." id="search-form">
+                    </div>
+                    
+                    <div id="stations"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="col-xs-6 col-sm-6 col-md-9">
+                <div class="container" >
+                    <div id="mapid" class="shadow-lg p-3 mb-5 bg-white rounded">
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+{% endblock %}
+            
+{% block scripts-footer %}
+    {% load static %}
+    <!-- <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script> -->
+    <script src="{% static 'js/search.js'%}"></script>
+    <script src="{% static 'js/map.js'%}"></script>
+{% endblock %}

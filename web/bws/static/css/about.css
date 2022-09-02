@@ -1,0 +1,21 @@
+.image-round {
+    border-radius : 50%;
+}
+
+.card-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-info h2{
+    margin-top: 5px;
+}
+
+.card-info a {
+    text-decoration: none;
+    color: #000;
+
+}
+
